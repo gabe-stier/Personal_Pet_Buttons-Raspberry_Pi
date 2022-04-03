@@ -4,7 +4,7 @@ from hashlib import sha3_512
 from app.managers.encryption import EncryptionManager
 from json import dumps
 
-class HttpManager:
+class APIManager:
     fqdn = ''
     port = ''
     password = ''

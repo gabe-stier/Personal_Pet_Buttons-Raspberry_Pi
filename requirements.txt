@@ -1,2 +1,5 @@
 pyserial
 pyserial-asyncio
+cryptography
+playsound
+requests
