@@ -7,12 +7,12 @@ class Config():
         self.config = ConfigParser().read("config.ini")
         self.defaults = self.config["defaults"]
         self.com_port = self.defaults['interface']
-        self.api_url = self.defaults['url']
         self.ip = self.defaults['ip']
         self.rate = self.defaults['baudrate']
         self.timeout = self.defaults['timeout']
         self.exponent = self.defaults['exponent']
         self.salt = self.defaults['salt']
+        self.api_port = self.defaults['api_port']
 
 class Messages():
     messages:list = []
