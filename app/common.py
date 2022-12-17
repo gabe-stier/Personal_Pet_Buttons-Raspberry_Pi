@@ -1,4 +1,4 @@
-from config import Config,Messages
+from app.config import Config,Messages
 
 config = Config()
 messages = Messages()
