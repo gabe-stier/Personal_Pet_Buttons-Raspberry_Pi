@@ -6,8 +6,7 @@ from socket import socket, AF_INET, SOCK_STREAM
 from app.managers.http import APIManager
 from app.managers.sound import SoundManager
 from datetime import datetime
-
-
+import threading
 ObjectHint = Tuple[List[str], Dict[str, Union[str, SoundManager]]]
 restAPIActive = False
 
@@ -16,11 +15,12 @@ def main() -> None:
     serial = Serial(config.com_port, config.rate)
     api: APIManager = APIManager(config.ip, config.api_port, config.exponent, config.salt)
     test_port(config.ip, config.api_port)
+    message_strings, msgs = init_objects(messages.messages)
+    print(message_strings)
     while True:
-        line = serial.readline().decode()
-        message_strings, msgs = init_objects(messages.messages)
+        line = serial.readline().decode().replace("\n", "")
         if line in message_strings:
-            task(line, msgs[line]["uri"], msgs[line]['sound'], api)
+            task(line, msgs[line]["uri"], msgs[line]['sound'], api)            
             pass
 
 
@@ -37,16 +37,19 @@ def test_port(ip, port) -> None:
 
 def task(msg: str, uri: str, sound: SoundManager, api: APIManager) -> bool:
     global restAPIActive
-    sound.play()
+    sound_thread = threading.Thread(target=sound.play, args=())
+    sound_thread.daemon = True
+    sound_thread.start()
+
     message = {
-        "message": message,
-        "time": datetime.now()
+        "message": msg,
+        "time": datetime.now().strftime('%c')
     }
+    print(message)
     if restAPIActive:
         if api.send_request(None, "post", uri):
             if api.send_request(None, "error", uri):
                 return None
-
 
 def init_objects(messages) -> ObjectHint:
     msgs = {}

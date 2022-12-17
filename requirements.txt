@@ -1,5 +1,5 @@
 pyserial
 pyserial-asyncio
 cryptography
-playsound
+playsound==1.2.2
 requests
