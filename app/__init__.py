@@ -20,7 +20,7 @@ def main() -> None:
     while True:
         line = serial.readline().decode().replace("\n", "")
         if line in message_strings:
-            task(line, msgs[line]["uri"], msgs[line]['sound'], api)            
+            task(line, msgs[line]["uri"], msgs[line]['sound'], api)
             pass
 
 
@@ -50,6 +50,7 @@ def task(msg: str, uri: str, sound: SoundManager, api: APIManager) -> bool:
         if api.send_request(None, "post", uri):
             if api.send_request(None, "error", uri):
                 return None
+
 
 def init_objects(messages) -> ObjectHint:
     msgs = {}

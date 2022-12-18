@@ -3,3 +3,4 @@ pyserial-asyncio
 cryptography
 playsound==1.2.2
 requests
+pep8
